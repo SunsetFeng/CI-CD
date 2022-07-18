@@ -4,6 +4,9 @@ services:
     image: jenkins/jenkins:lts-jdk11 #镜像
     volumes:
       - ./data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+      - /etc/docker/daemon.json:/etc/docker/daemon.json
     container_name: jenkins #指定自定义容器名称，而不是生成的默认名称
     restart: always #容器总是重新启动
     ports: #端口映射

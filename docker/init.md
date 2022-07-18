@@ -11,6 +11,14 @@
 
     ```
     {
-      "registry-mirrors":["https://ukyyrvrh.mirror.aliyuncs.com"]  // 阿里云镜像加速 每个阿里云账户的都不一样
+      "registry-mirrors":["https://ukyyrvrh.mirror.aliyuncs.com"],  // 阿里云镜像加速地址 每个阿里云账户的都不一样
+      "insecure-registries": ["http://192.168.233.131:8070"] //私有镜像仓库地址
     }
+    ```
+9. docker login -u [username] -p [password] http://192.168.233.131:8070 // 登录私有镜像仓库
+10. 修改docker.sock 文件的权限
+    ```
+    // /var/run 文件路径
+    chown root:root docker.sock // 修改用户组
+    chmod o+rw docker.sock  // 修改读写权限
     ```
