@@ -11,4 +11,8 @@
       sysctl -p //重新加载配置
       ```
 
-### 三、根据宿主机ip和映射端口访问sonarqube服务
+### 二、根据宿主机ip和映射端口访问sonarqube服务
+1. 创建访问令牌
+2. 项目内创建.properties文件并修改配置
+
+### 三、jenkins添加配置

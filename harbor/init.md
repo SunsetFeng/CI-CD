@@ -6,3 +6,5 @@
    - 需要安装docker和docker-compose
 
 ### 二、根据配置文件的配置域名和ip进行访问
+
+### 三、jenkins添加配置

@@ -8,3 +8,5 @@
 2. docker compose up -d 启动服务
 
 ### 三、根据宿主机ip和映射端口访问gitlab服务
+
+### 四、jenkins添加配置
