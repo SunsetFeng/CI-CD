@@ -4,9 +4,7 @@ BOOTPROTO=static
 ONBOOT=yes
 IPADDR=192.168.233.140
 NETMASK=255.255.255.0
-GATEWAY=192.168.233.1
-DNS1=114.114.114.114
-DNS2=8.8.8.8
+GATEWAY=192.168.233.2
 ```
 
 # 二、关闭swap
@@ -52,4 +50,10 @@ systemctl enable --now containerd
 install -m 755 runc.amd64 /usr/local/sbin/runc // 运行runc 下载地址https://github.com/opencontainers/runc/releases
 
 tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.1.1.tgz // 解压cni插件  下载地址https://github.com/containernetworking/plugins/releases
+```
+
+# 六、关闭防火墙
+```
+systemctl stop firewalld.service 
+systemctl disable firewalld.service 
 ```
