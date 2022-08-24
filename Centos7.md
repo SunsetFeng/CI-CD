@@ -49,6 +49,7 @@ systemctl enable --now containerd
 
 install -m 755 runc.amd64 /usr/local/sbin/runc // 运行runc 下载地址https://github.com/opencontainers/runc/releases
 
+mkdir -p /opt/cni/bin
 tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.1.1.tgz // 解压cni插件  下载地址https://github.com/containernetworking/plugins/releases
 ```
 
@@ -56,4 +57,24 @@ tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.1.1.tgz // 解压cni插件  �
 ```
 systemctl stop firewalld.service 
 systemctl disable firewalld.service 
+```
+
+# 七、安装kubeadm,kubelet,kubectl
+```
+
+cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+EOF
+setenforce 0
+yum install -y kubelet
+systemctl enable kubelet && systemctl start kubelet
+
+ps: 由于官网未开放同步方式, 可能会有索引gpg检查失败的情况, 这时请用 yum install -y --nogpgcheck kubelet 安装
+
 ```
