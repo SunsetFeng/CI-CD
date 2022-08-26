@@ -61,7 +61,6 @@ systemctl disable firewalld.service
 
 # 七、安装kubeadm,kubelet,kubectl
 ```
-
 cat <<EOF > /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
@@ -77,4 +76,8 @@ systemctl enable kubelet && systemctl start kubelet
 
 ps: 由于官网未开放同步方式, 可能会有索引gpg检查失败的情况, 这时请用 yum install -y --nogpgcheck kubelet 安装
 
+```
+# 八、安装控制面
+```
+kubeadm init --image-repository registry.aliyuncs.com/google_containers
 ```
