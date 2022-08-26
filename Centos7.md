@@ -89,7 +89,26 @@ systemctl enable kubelet && systemctl start kubelet
 ps: 由于官网未开放同步方式, 可能会有索引gpg检查失败的情况, 这时请用 yum install -y --nogpgcheck kubelet 安装
 
 ```
-# 八、安装控制面
+# 八、修改主机名
 ```
-kubeadm init --image-repository registry.aliyuncs.com/google_containers
+hostnamectl set-hostname your-new-host-name
+# 查看修改结果
+hostnamectl status
+# 设置 hostname 解析
+echo "127.0.0.1   $(hostname)" >> /etc/hosts
+```
+
+# 九、安装控制面
+```
+kubeadm init --image-repository registry.cn-hangzhou.aliyuncs.com/google_containers --pod-network-cidr=10.244.0.0/16
+
+//查看discovery-token-ca-cert-hash
+openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
+
+//查看token
+kubeadm token list
+//创建token
+kubeadm create token
+
+kubeadm join --token 67koez.usgl1t7hgpdyq1rc 192.168.233.141:6443 --discovery-token-ca-cert-hash sha256:99245f5062bd1124e4bf52453fbc17d5d3df06a6d17e9aa8d747942d67f9cd74
 ```
