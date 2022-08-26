@@ -1,4 +1,5 @@
 # 一、固定ip地址(wifi虚拟机使用)
+
 ```
 BOOTPROTO=static
 ONBOOT=yes
@@ -8,6 +9,7 @@ GATEWAY=192.168.233.2
 ```
 
 # 二、关闭swap
+
 ```
 swapoff -a
 vim /etc/fstab //注释swap行
@@ -16,6 +18,7 @@ free -h
 ```
 
 # 三、设置桥接流量模块
+
 ```
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
@@ -35,11 +38,13 @@ sudo sysctl --system
 ```
 
 # 四、修改内核命令，使用CGroup2
+
 ```
 grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=1"
 ```
 
 # 五、安装容器运行时
+
 ```
 tar Cxzvf /usr/local containerd-1.6.2-linux-amd64.tar.gz // 解压containerd包 下载地址https://github.com/containerd/containerd/releases
 
@@ -51,15 +56,22 @@ install -m 755 runc.amd64 /usr/local/sbin/runc // 运行runc 下载地址https:/
 
 mkdir -p /opt/cni/bin
 tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.1.1.tgz // 解压cni插件  下载地址https://github.com/containernetworking/plugins/releases
+
+// 配置容器
+containerd config default > /etc/containerd/config.toml
+sandbox_image = "registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.6"
+SystemdCgroup = true
 ```
 
 # 六、关闭防火墙
+
 ```
 systemctl stop firewalld.service 
 systemctl disable firewalld.service 
 ```
 
 # 七、安装kubeadm,kubelet,kubectl
+
 ```
 cat <<EOF > /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
